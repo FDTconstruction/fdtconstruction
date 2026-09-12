@@ -10,17 +10,39 @@
 <style>
   :root{
     --white:#ffffff;
-    --off-white:#fafafa;
+    --off-white:#f6f1e8;
     --black:#000000;
     --ink:#1a1a1a;
     --muted:#6b6b6b;
-    --line:#e5e5e5;
-    --line-strong:#d0d0d0;
-    --brown:#5c3a22;
-    --brown-dark:#3d2614;
-    --brown-light:#8b5a3c;
-    --cream:#f3ebe2;
-    --sand:#d4a884;
+    --line:#e7e2d8;
+    --line-strong:#cfc9bd;
+
+    /* neutres chauds */
+    --cream:#f3ede2;
+    --cream-soft:#faf6ee;
+    --grey-100:#e9e3d8;
+    --grey-300:#d3ccbf;
+    --grey-500:#9a948a;
+    --grey-700:#585349;
+
+    /* « accent » = encre (100% monochrome) */
+    --accent:#0f0f0f;
+    --accent-dark:#000000;
+    --accent-tint:#f0ece4;
+    --beige:#f3ede2;
+    --beige-deep:#e7dfd1;
+
+    /* anciennes variables repointées (encre / neutres, aucun brun ni couleur) */
+    --brown:#0f0f0f;
+    --brown-dark:#000000;
+    --brown-light:#cfc7b8;   /* clair : sert surtout sur fonds noirs (nav, pied de page) */
+    --sand:#0f0f0f;
+
+    /* dégradés blanc / crème / gris */
+    --grad-light:linear-gradient(155deg,#ffffff 0%,var(--cream) 100%);
+    --grad-grey:linear-gradient(155deg,var(--grey-100) 0%,var(--grey-300) 100%);
+    --grad-dark:linear-gradient(155deg,#1c1c1c 0%,#0a0a0a 100%);
+    --grad-section:linear-gradient(180deg,var(--cream-soft) 0%,#ffffff 62%);
   }
 
   *{box-sizing:border-box;margin:0;padding:0}
@@ -138,7 +160,7 @@
 .hero h1 em{
   font-style:italic;
   font-weight:300;
-  color:#d4a884;
+  color:#efe7d8;
 }
 
 /* BOUTONS */
@@ -372,10 +394,10 @@
     padding:32px;z-index:2;transition:background .4s;
   }
   .category-tile:hover .category-overlay{
-    background:linear-gradient(180deg,rgba(0,0,0,.25) 0%,rgba(61,38,20,.88) 100%);
+    background:linear-gradient(180deg,rgba(0,0,0,.25) 0%,rgba(0,0,0,.90) 100%);
   }
   .category-tile.active .category-overlay{
-    background:linear-gradient(180deg,rgba(0,0,0,.3) 0%,rgba(92,58,34,.92) 100%);
+    background:linear-gradient(180deg,rgba(0,0,0,.3) 0%,rgba(0,0,0,.92) 100%);
   }
   .category-tile.active .category-image{
     box-shadow:inset 0 0 0 3px var(--brown-light);
@@ -628,102 +650,112 @@
   }
   .lightbox-details:hover{color:var(--brown);border-bottom-color:var(--brown)}
 
-  /* ============ WHY US — atouts (édition laiton) ============ */
+  /* ============ WHY US — bento noir & blanc ============ */
   .why{
     position:relative;overflow:hidden;
-    padding:132px 0 142px;
-    color:var(--cream);
-    background:
-      radial-gradient(90% 62% at 50% -12%, rgba(232,185,132,.24), transparent 60%),
-      linear-gradient(180deg,#28190e 0%, #3d2614 46%, #26170d 100%);
-  }
-  .why::before{
-    content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
-    opacity:.10;mix-blend-mode:overlay;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-size:180px 180px;
+    padding:118px 0 128px;
+    background:var(--grad-section);color:#0a0a0a;
   }
   .why .container{position:relative;z-index:1}
 
-  .why-head{text-align:center;max-width:720px;margin:0 auto 76px}
-  .why .section-eyebrow{color:var(--sand)}
-  .why-head h2{
-    font-family:'Fraunces',serif;font-weight:400;margin-top:8px;
-    font-size:clamp(38px,5.2vw,62px);line-height:1.03;letter-spacing:-.025em;
-    color:var(--cream);font-variation-settings:"opsz" 144;
+  .bento{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    grid-template-rows:206px 206px auto;
+    grid-template-areas:
+      "title title r1 r1 r2 r2"
+      "title title r3 r4 r2 r2"
+      "r5 r5 r5 r6 r6 r6";
+    gap:18px;
   }
-  .why-head h2 em{font-style:italic;color:var(--sand);font-weight:300}
-  .why-head p{
-    font-family:'Manrope',sans-serif;font-size:17px;line-height:1.6;
-    color:rgba(243,235,226,.66);margin-top:20px;
-  }
-
-  .atouts{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-
-  .atout{
+  .cell{
     position:relative;overflow:hidden;
-    padding:48px 38px 44px;
-    background:linear-gradient(180deg, rgba(243,235,226,.065), rgba(243,235,226,.02));
-    border:1px solid rgba(243,235,226,.12);
-    transition:transform .45s cubic-bezier(.2,.7,.2,1),border-color .4s ease,background .4s ease,box-shadow .45s ease;
+    border:1.7px solid #0a0a0a;
+    background:var(--grad-light);color:#0a0a0a;
+    padding:26px 28px;
+    display:flex;flex-direction:column;justify-content:space-between;gap:18px;
+    transition:background .28s ease,color .28s ease,box-shadow .3s ease,transform .3s ease;
   }
-  .atout:hover{
-    transform:translateY(-9px);
-    border-color:rgba(212,168,132,.55);
-    background:linear-gradient(180deg, rgba(243,235,226,.11), rgba(243,235,226,.035));
-    box-shadow:0 36px 64px -30px rgba(0,0,0,.8);
-  }
-  /* coins architecturaux dorés au survol */
-  .atout::before,.atout::after{
-    content:'';position:absolute;width:18px;height:18px;
-    border-color:var(--sand);border-style:solid;border-width:0;opacity:0;
-    transition:opacity .4s ease;
-  }
-  .atout::before{top:14px;left:14px;border-top-width:1.5px;border-left-width:1.5px}
-  .atout::after{bottom:14px;right:14px;border-bottom-width:1.5px;border-right-width:1.5px}
-  .atout:hover::before,.atout:hover::after{opacity:.9}
+  .cell.dark{background:var(--grad-dark);color:#fff}
+  .cell:hover{transform:translate(-4px,-4px);box-shadow:12px 12px 0 0 #0a0a0a;background:var(--grad-dark);color:#fff}
+  .cell.dark:hover{background:var(--grad-light);color:#0a0a0a}
 
-  /* médaillon laiton */
-  .atout-medal{
-    width:84px;height:84px;border-radius:50%;position:relative;
-    display:flex;align-items:center;justify-content:center;margin-bottom:30px;
-    background:radial-gradient(circle at 36% 30%, #f6d7ac 0%, #e0ac74 36%, #bd7d41 74%, #9c6231 100%);
-    box-shadow:
-      inset 0 0 0 1px rgba(255,241,222,.4),
-      inset 0 -6px 12px rgba(120,70,30,.5),
-      0 10px 24px -6px rgba(0,0,0,.6),
-      0 0 30px -8px rgba(232,185,132,.6);
-    transition:transform .45s ease, box-shadow .45s ease;
-  }
-  .atout-medal::after{
-    content:'';position:absolute;inset:5px;border-radius:50%;pointer-events:none;
-    background:linear-gradient(170deg, rgba(255,255,255,.45), rgba(255,255,255,0) 46%);
-  }
-  .atout-medal svg{
-    width:37px;height:37px;position:relative;z-index:1;
-    fill:none;stroke:#3a2412;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;
-  }
-  .atout:hover .atout-medal{
-    transform:scale(1.07) rotate(-3deg);
-    box-shadow:
-      inset 0 0 0 1px rgba(255,241,222,.55),
-      inset 0 -6px 12px rgba(120,70,30,.5),
-      0 12px 28px -6px rgba(0,0,0,.65),
-      0 0 46px -6px rgba(240,197,140,.85);
-  }
+  .cell.title{grid-area:title;justify-content:flex-end}
+  .cell.r1{grid-area:r1}
+  .cell.r2{grid-area:r2}
+  .cell.r3{grid-area:r3}
+  .cell.r4{grid-area:r4}
+  .cell.r5{grid-area:r5}
+  .cell.r6{grid-area:r6}
 
-  .atout-title{
-    font-family:'Fraunces',serif;font-size:24px;font-weight:500;letter-spacing:-.01em;
-    color:var(--cream);margin-bottom:12px;font-variation-settings:"opsz" 144;
+  /* case titre */
+  .cell.title{cursor:default}
+  .cell.title:hover{transform:none;box-shadow:none;background:#0a0a0a;color:#fff}
+  .cell.title .section-eyebrow{color:var(--brown-light)!important}
+  .cell.title .section-eyebrow{color:currentColor;margin-bottom:14px}
+  .cell.title h2{
+    font-family:'Fraunces',serif;font-weight:400;
+    font-size:clamp(34px,3.4vw,52px);line-height:.98;letter-spacing:-.03em;
+    font-variation-settings:"opsz" 144;
   }
-  .atout-desc{
-    font-family:'Manrope',sans-serif;font-size:15px;line-height:1.62;
-    color:rgba(243,235,226,.72);
-  }
-  .atout-desc strong{color:var(--sand);font-weight:600;letter-spacing:.02em}
+  .cell.title h2 em{font-style:italic;font-weight:300;text-decoration:underline;text-underline-offset:7px;text-decoration-thickness:1.4px}
 
-  @media (max-width:900px){ .atouts{grid-template-columns:repeat(2,1fr)} }
-  @media (max-width:560px){ .atouts{grid-template-columns:1fr} .why-head{margin-bottom:52px} }
+  /* icônes */
+  .c-ico{display:block}
+  .c-ico svg{fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;width:56px;height:56px;display:block}
+  .cell.r1 .c-ico svg,.cell.r5 .c-ico svg{width:62px;height:62px}
+  .cell.r2 .c-ico svg{width:74px;height:74px}
+
+  .c-title{
+    font-family:'Fraunces',serif;font-weight:500;
+    font-size:23px;line-height:1.05;letter-spacing:-.01em;
+    margin-bottom:8px;font-variation-settings:"opsz" 144;
+  }
+  .cell.r3 .c-title,.cell.r4 .c-title{margin-bottom:0}
+  .c-desc{
+    font-family:'Manrope',sans-serif;font-size:14.5px;line-height:1.55;
+    color:currentColor;opacity:.7;
+  }
+  .c-desc strong{opacity:1;font-weight:700}
+
+  /* case chiffre (100+) */
+  .cell.accent{background:var(--grad-grey);color:#0a0a0a;border-color:#0a0a0a}
+  .cell.accent:hover{background:var(--grad-dark);color:#fff;transform:translate(-4px,-4px);box-shadow:12px 12px 0 0 #0a0a0a}
+  .cell.r6{flex-direction:row;align-items:center;gap:28px}
+  .c-big{
+    font-family:'Fraunces',serif;font-weight:300;line-height:.85;letter-spacing:-.04em;
+    font-size:clamp(72px,8vw,116px);font-variation-settings:"opsz" 144;flex-shrink:0;
+  }
+  .c-big span{font-size:.42em;vertical-align:super;font-weight:400}
+  .cell.r6 .c-title{font-size:26px;margin-bottom:8px}
+
+  /* filet décoratif dans les petites cases */
+  .cell.r3,.cell.r4{justify-content:space-between}
+
+  @media (max-width:1024px){
+    .bento{
+      grid-template-columns:repeat(2,1fr);
+      grid-template-rows:none;
+      grid-auto-rows:minmax(210px,auto);
+      grid-template-areas:
+        "title title"
+        "r1 r2"
+        "r3 r4"
+        "r5 r5"
+        "r6 r6";
+    }
+    .cell.title{grid-area:title}
+    .cell.r6{grid-column:1 / -1}
+  }
+  @media (max-width:620px){
+    .bento{
+      grid-template-columns:1fr;grid-auto-rows:minmax(168px,auto);
+      grid-template-areas:"title" "r1" "r2" "r3" "r4" "r5" "r6";
+    }
+    .cell{padding:24px 24px}
+    .cell.r6{flex-direction:column;align-items:flex-start;gap:8px}
+    .cell.r2{min-height:230px}
+  }
 
   /* ============ CONTACT ============ */
   .contact-section{padding:120px 0 0;background:var(--white)}
@@ -769,7 +801,7 @@
   .info-value{font-size:15px;color:var(--ink);font-weight:500}
 
   .contact-form{
-    background:var(--off-white);
+    background:var(--grad-light);
     padding:48px;border:1px solid var(--line);
   }
   .form-eyebrow{
@@ -818,7 +850,7 @@
   }
   .form-status.ok,.form-status.err{display:block}
   .form-status.ok{
-    background:rgba(92,58,34,.08);
+    background:rgba(20,20,20,.06);
     border-left:3px solid var(--brown);color:var(--brown-dark);
   }
   .form-status.err{
@@ -996,51 +1028,61 @@
   </div>
 </section>
 
-<!-- WHY US — atouts (édition laiton) -->
+<!-- WHY US — bento noir & blanc -->
 <section class="why" id="why">
   <div class="container">
-    <div class="why-head">
-      <div class="section-eyebrow">— Pourquoi FDT Construction</div>
-      <h2>L'assurance d'une maison <em>bien bâtie</em></h2>
-      <p>Six engagements qui font la différence, de la première pelletée à la remise des clés.</p>
-    </div>
+    <div class="bento">
 
-    <div class="atouts">
-      <article class="atout">
-        <div class="atout-medal"><svg viewBox="0 0 24 24"><path d="m15 12-8.373 8.373a1 1 0 1 1-3-3L12 9"/><path d="m18 15 4-4"/><path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172V7l-2.26-2.26a6 6 0 0 0-4.202-1.756L9 2.96l.92.82A6.18 6.18 0 0 1 12 8.4V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5"/></svg></div>
-        <h3 class="atout-title">Une expertise dédiée</h3>
-        <p class="atout-desc">Nous sommes spécialisés dans la construction de maisons neuves, et rien d'autre.</p>
-      </article>
+      <div class="cell dark title">
+        <div>
+          <div class="section-eyebrow">— Pourquoi nous</div>
+          <h2>Six raisons,<br><em>une seule équipe</em></h2>
+        </div>
+      </div>
 
-      <article class="atout">
-        <div class="atout-medal"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg></div>
-        <h3 class="atout-title">Entrepreneur licencié</h3>
-        <p class="atout-desc">Licence RBQ d'entrepreneur général. <strong>N° 5768-1496-01</strong></p>
-      </article>
+      <div class="cell r1">
+        <span class="c-ico"><svg viewBox="0 0 24 24"><path d="m15 12-8.373 8.373a1 1 0 1 1-3-3L12 9"/><path d="m18 15 4-4"/><path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172V7l-2.26-2.26a6 6 0 0 0-4.202-1.756L9 2.96l.92.82A6.18 6.18 0 0 1 12 8.4V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5"/></svg></span>
+        <div>
+          <div class="c-title">Une expertise dédiée</div>
+          <p class="c-desc">Spécialisés dans la maison neuve, et rien d'autre.</p>
+        </div>
+      </div>
 
-      <article class="atout">
-        <div class="atout-medal"><svg viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></svg></div>
-        <h3 class="atout-title">Clé en main</h3>
-        <p class="atout-desc">Nous gérons votre projet du début à la fin — vous n'avez qu'à emménager.</p>
-      </article>
+      <div class="cell dark r2">
+        <span class="c-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg></span>
+        <div>
+          <div class="c-title">Entrepreneur licencié</div>
+          <p class="c-desc">Licence RBQ d'entrepreneur général.</p>
+          <p class="c-desc" style="opacity:1;margin-top:12px;font-family:'Fraunces',serif;font-style:italic;font-size:19px">N° 5768-1496-01</p>
+        </div>
+      </div>
 
-      <article class="atout">
-        <div class="atout-medal"><svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5"/><path d="M9.4 14a3.5 3.5 0 0 1 5.2 0"/><path d="M12 17h.01"/></svg></div>
-        <h3 class="atout-title">Maison intelligente</h3>
-        <p class="atout-desc">Spécialistes en domotique, nous intégrons la technologie dès la conception.</p>
-      </article>
+      <div class="cell dark r3">
+        <span class="c-ico"><svg viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></svg></span>
+        <div class="c-title">Clé en main</div>
+      </div>
 
-      <article class="atout">
-        <div class="atout-medal"><svg viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></div>
-        <h3 class="atout-title">Garantie maison neuve</h3>
-        <p class="atout-desc">Votre investissement est protégé par la garantie de l'<strong>APCHQ</strong>.</p>
-      </article>
+      <div class="cell r4">
+        <span class="c-ico"><svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5"/><path d="M9.4 14a3.5 3.5 0 0 1 5.2 0"/><path d="M12 17h.01"/></svg></span>
+        <div class="c-title">Maison intelligente</div>
+      </div>
 
-      <article class="atout">
-        <div class="atout-medal"><svg viewBox="0 0 24 24"><path d="M3 21V10l5-4 5 4v11"/><path d="M13 21V13l4-3 4 3v8"/><path d="M3 21h18"/></svg></div>
-        <h3 class="atout-title">Un modèle pour vous</h3>
-        <p class="atout-desc"><strong>Plus de 100 modèles</strong>, du plain-pied au cottage, à adapter à vos besoins.</p>
-      </article>
+      <div class="cell r5">
+        <span class="c-ico"><svg viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span>
+        <div>
+          <div class="c-title">Garantie maison neuve</div>
+          <p class="c-desc">Votre investissement est protégé par la garantie de l'<strong>APCHQ</strong>.</p>
+        </div>
+      </div>
+
+      <div class="cell accent r6">
+        <div class="c-big">100<span>+</span></div>
+        <div>
+          <div class="c-title">modèles disponibles</div>
+          <p class="c-desc">Du plain-pied au cottage, chaque plan s'adapte à vos besoins.</p>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
